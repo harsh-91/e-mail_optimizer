@@ -23,7 +23,8 @@
     <input type="email" name="sender_email" placeholder="you@gmail.com" required>
 
     <label>App Password (16-digit):</label>
-    <input type="password" name="app_password" placeholder="Paste your App Password" required>
+    <input type="password" name="app_password" id="send_password" placeholder="Paste your App Password" required>
+    <input type="checkbox" onclick="toggleSendPassword()"> Show Password<br><br>
 
     <label>Customer Name:</label>
     <input type="text" name="name" placeholder="e.g. Ramesh Kumar">
@@ -64,12 +65,21 @@
   </div>
 
   <a href="/">← Back to SPF/DKIM/DMARC Checker</a>
+
+  <hr>
+  <nav>
+    <a href="/">🏠 Home</a> |
+    <a href="/email">✉️ Compose Email</a> |
+    <a href="/analyze">📬 Analyze Inbound Email</a>
+  </nav>
+
+  <script>
+    function toggleSendPassword() {
+      const field = document.getElementById("send_password");
+      field.type = field.type === "password" ? "text" : "password";
+    }
+  </script>
+{% include 'footer.html' %}
+
 </body>
 </html>
-
-<hr>
-<nav>
-  <a href="/">🏠 Home</a> |
-  <a href="/email">✉️ Compose Email</a> |
-  <a href="/analyze">📬 Analyze Inbound Email</a>
-</nav>

@@ -2,41 +2,48 @@
 <html>
 <head>
   <title>Email Authentication Checker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="font-family: Arial, sans-serif; margin: 20px;">
+<body>
+
   <h2>🔐 Email Delivery Diagnostics</h2>
-<p>Welcome to your unified email tool:</p>
-<ul>
-  <li>Check if your domain passes SPF, DKIM, and DMARC</li>
-  <li>Send branded travel emails using Gmail SMTP</li>
-  <li>Analyze real-world inbound headers for issues</li>
-</ul>
 
+  <p>Welcome to your unified email tool:</p>
+  <ul>
+    <li>Check if your domain passes SPF, DKIM, and DMARC</li>
+    <li>Send branded travel emails using Gmail SMTP</li>
+    <li>Analyze real-world inbound headers for issues</li>
+  </ul>
 
-  <div style="background-color:#f0f0f0; padding: 10px; border-left: 5px solid #007bff;">
+  <div class="instructions">
     <p><strong>SPF</strong>: Confirms which servers are allowed to send emails for your domain.<br>
        <strong>DKIM</strong>: Verifies email integrity and authenticity using a signature.<br>
        <strong>DMARC</strong>: Tells mail providers what to do if SPF or DKIM fails.</p>
   </div>
 
-  <form method="post" style="margin-top: 20px;">
-    <label>Domain (e.g., google.com):</label><br>
-    <input type="text" name="domain" placeholder="example.com" style="width: 300px;"><br><br>
+  <a href="/setup" class="setup-btn">⚙️ Change Setup</a>
 
-    <label>DKIM Selector (e.g., default, google, 20230601):</label><br>
-    <input type="text" name="selector" placeholder="selector" style="width: 300px;"><br><br>
+  <form method="post" style="margin-top: 20px;">
+    <label>Domain (e.g., google.com):</label>
+    <input type="text" name="domain" placeholder="example.com" required>
+
+    <label>DKIM Selector (e.g., default, google, 20230601):</label>
+    <input type="text" name="selector" placeholder="selector" required>
 
     <input type="submit" value="Run Checks">
   </form>
 
-  <hr>
-  <a href="/email">➡ Compose Travel Email</a>
+  {% if session.domain %}
+    <p class="note"><strong>Currently set domain:</strong> {{ session.domain }}</p>
+  {% endif %}
+
+  <nav class="nav-pane">
+    <a href="/">🏠 Home</a> |
+    <a href="/setup">⚙️ Setup</a> |
+    <a href="/email">✉️ Send Email</a> |
+    <a href="/analyze">📬 Analyze Email</a>
+  </nav>
+{% include 'footer.html' %}
+
 </body>
 </html>
-
-<hr>
-<nav>
-  <a href="/">🏠 Home</a> |
-  <a href="/email">✉️ Compose Email</a> |
-  <a href="/analyze">📬 Analyze Inbound Email</a>
-</nav>

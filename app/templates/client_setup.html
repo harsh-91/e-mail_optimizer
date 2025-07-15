@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Setup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>🔧 Setup Your Email Diagnostics</h2>
+
+    <form action="/setup" method="POST">
+        <label>Domain Name:</label><br>
+        <input type="text" name="domain" required><br><br>
+
+        <label>DKIM Selector:</label><br>
+        <input type="text" name="selector" required><br><br>
+
+        <label>Gmail Address:</label><br>
+        <input type="email" name="gmail" required><br><br>
+
+        <label>Gmail App Password:</label><br>
+        <input type="password" name="password" id="app_password" required>
+        <input type="checkbox" onclick="togglePassword()"> Show Password<br><br>
+
+        <input type="submit" value="Save and Continue">
+    </form>
+
+    <script>
+        function togglePassword() {
+            const pwField = document.getElementById("app_password");
+            pwField.type = pwField.type === "password" ? "text" : "password";
+        }
+    </script>
+<hr>
+<nav class="nav-pane">
+  <a href="/">🏠 Home</a> |
+  <a href="/setup">⚙️ Setup</a> |
+  <a href="/email">✉️ Send Email</a> |
+  <a href="/analyze">📬 Analyze Email</a>
+</nav>
+{% include 'footer.html' %}
+
+</body>
+</html>

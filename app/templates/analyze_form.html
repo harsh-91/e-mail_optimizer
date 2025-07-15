@@ -1,19 +1,39 @@
-<h2>📥 Inbound Email Analyzer</h2>
-<form method="post">
-  <label>Your Gmail (IMAP enabled):</label><br>
-  <input type="email" name="email" required><br><br>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analyze Received Email</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>📥 Analyze Inbound Email Headers</h2>
 
-  <label>App Password:</label><br>
-  <input type="password" name="password" required><br><br>
+    <form method="POST" action="/analyze">
+        <label>Gmail Address:</label><br>
+        <input type="email" name="email" required><br><br>
 
-  <label>Subject Filter (optional):</label><br>
-  <input type="text" name="subject"><br><br>
+        <label>Gmail App Password:</label><br>
+        <input type="password" name="password" id="analyze_password" required>
+        <input type="checkbox" onclick="toggleAnalyzePassword()"> Show Password<br><br>
 
-  <input type="submit" value="Analyze Latest Email">
-</form>
-<hr>
-<nav>
-  <a href="/">🏠 Home</a> |
-  <a href="/email">✉️ Compose Email</a> |
-  <a href="/analyze">📬 Analyze Inbound Email</a>
-</nav>
+        <label>Filter by Subject (optional):</label><br>
+        <input type="text" name="subject"><br><br>
+
+        <input type="submit" value="Analyze">
+    </form>
+
+    <script>
+        function toggleAnalyzePassword() {
+            const field = document.getElementById("analyze_password");
+            field.type = field.type === "password" ? "text" : "password";
+        }
+    </script>
+     <hr>
+    <nav class="nav-pane">
+     <a href="/">🏠 Home</a> |
+     <a href="/setup">⚙️ Setup</a> |
+     <a href="/email">✉️ Send Email</a> |
+     <a href="/analyze">📬 Analyze Email</a>
+    </nav>
+{% include 'footer.html' %}
+</body>
+</html>

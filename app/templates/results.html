@@ -1,29 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Results for {{ domain }}</title>
+    <title>Email Auth Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="font-family: Arial, sans-serif; margin: 20px;">
-  <h2>🔍 Results for <em>{{ domain }}</em></h2>
+<body>
 
-  <h3>SPF:</h3>
-  <pre style="background:#f9f9f9; padding:10px;">{{ spf }}</pre>
+<h2>🔎 Email Authentication Results for {{ domain }}</h2>
 
-  <h3>DKIM:</h3>
-  <pre style="background:#f9f9f9; padding:10px;">{{ dkim }}</pre>
+<h3>✅ SPF Record</h3>
+{% if spf %}
+  <div class="status-pass">
+    ✓ SPF record found:
+    <pre id="spf-text">{{ spf }}</pre>
+    <button class="copy-btn" onclick="copyToClipboard('spf-text')">Copy</button>
+  </div>
+  {% if "softfail" in spf or "~all" in spf %}
+  <div class="suggestion">
+    ⚠️ Suggestion: Replace <code>~all</code> with <code>-all</code> for stricter enforcement.
+  </div>
+  {% endif %}
+{% else %}
+  <div class="status-fail">
+    ✗ No SPF record found.
+  </div>
+  <div class="suggestion">
+    Add this TXT record:<br>
+    <code>v=spf1 include:_spf.google.com ~all</code>
+    <button class="copy-btn" onclick="copyRecord('v=spf1 include:_spf.google.com ~all')">Copy</button>
+  </div>
+{% endif %}
 
-  <h3>DMARC:</h3>
-  <pre style="background:#f9f9f9; padding:10px;">{{ dmarc }}</pre>
+<h3>✅ DKIM Record</h3>
+{% if dkim %}
+  <div class="status-pass">
+    ✓ DKIM record found for selector.
+    <pre id="dkim-text">{{ dkim }}</pre>
+    <button class="copy-btn" onclick="copyToClipboard('dkim-text')">Copy</button>
+  </div>
+{% else %}
+  <div class="status-fail">
+    ✗ No DKIM record found for that selector.
+  </div>
+  <div class="suggestion">
+    Go to your DNS panel and add your DKIM public key.<br>
+    For Google Workspace: Admin → Apps → Gmail → Authenticate email.
+  </div>
+{% endif %}
 
-  <br>
-  <a href="/">⬅ Back to Checker</a> | 
-  <a href="/email">➡ Go to Email Composer</a>
-</body>
-</html>
+<h3>✅ DMARC Record</h3>
+{% if dmarc %}
+  <div class="status-pass">
+    ✓ DMARC record found:
+    <pre id="dmarc-text">{{ dmarc }}</pre>
+    <button class="copy-btn" onclick="copyToClipboard('dmarc-text')">Copy</button>
+  </div>
+  {% if "p=none" in dmarc %}
+  <div class="suggestion">
+    Strengthen DMARC policy from <code>p=none</code> to <code>p=quarantine</code> or <code>p=reject</code>.
+  </div>
+  {% endif %}
+{% else %}
+  <div class="status-fail">
+    ✗ No DMARC record found.
+  </div>
+  <div class="suggestion">
+    Add this TXT record:<br>
+    <code>_dmarc.{{ domain }} TXT "v=DMARC1; p=quarantine; rua=mailto:postmaster@{{ domain }}"</code>
+    <button class="copy-btn" onclick="copyRecord('_dmarc.{{ domain }} TXT &quot;v=DMARC1; p=quarantine; rua=mailto:postmaster@{{ domain }}&quot;')">Copy</button>
+  </div>
+{% endif %}
 
 <hr>
-<nav>
-  <a href="/">🏠 Home</a> |
-  <a href="/email">✉️ Compose Email</a> |
-  <a href="/analyze">📬 Analyze Inbound Email</a>
-</nav>
+<a href="/">🏠 Back</a> |
+<a href="/email">✉️ Send Email</a> |
+<a href="/analyze">📬 Analyze Inbound Email</a>
+
+<script>
+function copyToClipboard(id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+}
+
+function copyRecord(text) {
+  navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+}
+</script>
+{% include 'footer.html' %}
+
+</body>
+</html>
