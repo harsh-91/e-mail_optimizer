@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email Authentication Analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2>📬 Email Authentication Report</h2>
+
+<div class="instructions">
+  <p>This analysis is based on the headers of the latest email received in your Gmail inbox. It helps determine whether your domain's SPF, DKIM, and DMARC policies are properly configured and whether the email passed those checks.</p>
+</div>
+
+<div class="header-box">
+
+  <h4>🔹 Subject & Sender</h4>
+  <p><strong>Subject:</strong> {{ result.splitlines()[0].replace('[bold]Subject:[/bold] ', '') }}</p>
+  <p><strong>From:</strong> {{ result.splitlines()[1].replace('[bold]From:[/bold] ', '') }}</p>
+  <p><strong>Return-Path:</strong> {{ result.splitlines()[2].replace('[bold]Return-Path:[/bold] ', '') }}</p>
+  <p class="note">📝 <em>The Return-Path is where bounce messages go. It should match your sending domain if SPF is configured correctly.</em></p>
+
+  <h4>✅ SPF (Sender Policy Framework)</h4>
+  <pre>{{ result.split('[bold]Received-SPF:[/bold]')[1].split('[bold]Authentication-Results:')[0].strip() }}</pre>
+  <p class="note">🧠 <em>SPF ensures that the sending mail server is authorized to send on behalf of your domain. If this fails, emails may be marked as spam.</em></p>
+
+  <h4>✅ DKIM (DomainKeys Identified Mail)</h4>
+  <pre>{{ result.split('[bold]Authentication-Results:[/bold]')[1].split('[bold]DKIM-Signature:')[0].strip() }}</pre>
+  <p class="note">🧠 <em>DKIM uses a cryptographic signature to prove the email content wasn't modified. This should pass if your domain is signing emails correctly.</em></p>
+
+  <h4>✅ DMARC (Domain-based Message Authentication, Reporting & Conformance)</h4>
+  <p>{{ "dmarc=" in result and result[result.find("dmarc="):result.find("header.from")] }}</p>
+  <p class="note">🧠 <em>DMARC builds on SPF and DKIM. It tells recipients how to handle emails that fail these checks. You should have a policy of <code>reject</code> or <code>quarantine</code> to block spoofed emails.</em></p>
+
+  <h4>🔎 DKIM Signature (raw)</h4>
+  <pre>
+  {{ result.split('[bold]DKIM-Signature:[/bold]')[1].strip() if '[bold]DKIM-Signature:[/bold]' in result else 'No DKIM signature found.' }}
+  </pre>
+  <p class="note">🧠 <em>This is the actual DKIM cryptographic signature in the email header. Only shown here for technical validation.</em></p>
+
+</div>
+
+<br>
+<a href="/analyze">← Try Another Email</a> |
+<a href="/">← Back to Home</a>
+
+</body>
+</html>
+
+<hr>
+<nav>
+  <a href="/">🏠 Home</a> |
+  <a href="/email">✉️ Compose Email</a> |
+  <a href="/analyze">📬 Analyze Inbound Email</a>
+</nav>

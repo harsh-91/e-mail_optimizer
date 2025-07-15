@@ -1,0 +1,107 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 40px auto;
+  max-width: 700px;
+  padding: 0 20px;
+  background-color: #fefefe;
+  color: #333;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.instructions {
+  background: #f8f9fa;
+  border-left: 5px solid #007bff;
+  padding: 15px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.instructions strong {
+  display: inline-block;
+  min-width: 60px;
+  color: #000;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 15px;
+  display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+a {
+  color: #6c00c7;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.instructions {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-left: 5px solid #007bff;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+pre, .header-box {
+  background-color: #f9f9f9;
+  padding: 10px;
+  white-space: pre-wrap;
+  font-size: 13px;
+  border-left: 4px solid #ccc;
+}
+.header-box {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-left: 5px solid #007bff;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.note {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 25px;
+  margin-top: -10px;
+}
+
+h4 {
+  margin-top: 25px;
+  margin-bottom: 5px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 2px;
+}

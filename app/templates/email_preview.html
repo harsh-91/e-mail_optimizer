@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send Travel Email</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <h2>✉️ Compose & Send Travel Email</h2>
+
+  <div class="instructions">
+    <h3>📌 Instructions:</h3>
+    <ul>
+      <li>Enter your <strong>Gmail address</strong> and <strong>App Password</strong>.</li>
+      <li>Use <a href="https://myaccount.google.com/apppasswords" target="_blank">Google App Passwords</a> to generate a 16-digit key if 2FA is enabled.</li>
+      <li>Fill in the customer’s name, itinerary, and price.</li>
+      <li>After clicking "Send Email", the app will preview and deliver it.</li>
+    </ul>
+  </div>
+
+  <form method="post">
+    <label>Sender Gmail:</label>
+    <input type="email" name="sender_email" placeholder="you@gmail.com" required>
+
+    <label>App Password (16-digit):</label>
+    <input type="password" name="app_password" placeholder="Paste your App Password" required>
+
+    <label>Customer Name:</label>
+    <input type="text" name="name" placeholder="e.g. Ramesh Kumar">
+
+    <label>Itinerary (e.g. Flight AI-202 on 19th Jul):</label>
+    <textarea name="itinerary" rows="4"></textarea>
+
+    <label>Total Price (INR):</label>
+    <input type="text" name="price" placeholder="e.g. 7999">
+
+    <label>Recipient Email:</label>
+    <input type="email" name="to" placeholder="customer@example.com" required>
+
+    <label>Email Subject:</label>
+    <input type="text" name="subject" value="Your Trip Itinerary">
+
+    <input type="submit" value="Send Email">
+  </form>
+
+  {% if html %}
+    <h3>📤 Preview of Sent Email</h3>
+    <pre>{{ html|safe }}</pre>
+  {% endif %}
+
+  <div class="glossary">
+    <h3>📚 What do these terms mean?</h3>
+    <h4>SPF (Sender Policy Framework)</h4>
+    <p>Defines which mail servers are allowed to send emails on behalf of your domain.</p>
+
+    <h4>DKIM (DomainKeys Identified Mail)</h4>
+    <p>Ensures your email content hasn’t been altered and verifies authenticity using cryptographic signatures.</p>
+
+    <h4>DMARC (Domain-based Message Authentication, Reporting and Conformance)</h4>
+    <p>Combines SPF and DKIM and tells receiving mail servers how to handle failures (e.g., reject or quarantine).</p>
+
+    <h4>Gmail App Password</h4>
+    <p>A special 16-digit password generated for apps (like this one) when 2-Step Verification is enabled on your Google account.</p>
+  </div>
+
+  <a href="/">← Back to SPF/DKIM/DMARC Checker</a>
+</body>
+</html>
+
+<hr>
+<nav>
+  <a href="/">🏠 Home</a> |
+  <a href="/email">✉️ Compose Email</a> |
+  <a href="/analyze">📬 Analyze Inbound Email</a>
+</nav>

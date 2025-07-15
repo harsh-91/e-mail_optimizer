@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Results for {{ domain }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+  <h2>🔍 Results for <em>{{ domain }}</em></h2>
+
+  <h3>SPF:</h3>
+  <pre style="background:#f9f9f9; padding:10px;">{{ spf }}</pre>
+
+  <h3>DKIM:</h3>
+  <pre style="background:#f9f9f9; padding:10px;">{{ dkim }}</pre>
+
+  <h3>DMARC:</h3>
+  <pre style="background:#f9f9f9; padding:10px;">{{ dmarc }}</pre>
+
+  <br>
+  <a href="/">⬅ Back to Checker</a> | 
+  <a href="/email">➡ Go to Email Composer</a>
+</body>
+</html>
+
+<hr>
+<nav>
+  <a href="/">🏠 Home</a> |
+  <a href="/email">✉️ Compose Email</a> |
+  <a href="/analyze">📬 Analyze Inbound Email</a>
+</nav>
